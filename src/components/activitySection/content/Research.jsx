@@ -109,9 +109,9 @@ const Research = () => {
   return (
     
 <ReactFlowProvider>
-      <button onClick={onAddNode}>Add Node</button>
+      <button onClick={onAddNode}>Add note</button>
       <button onClick={onDeleteNode} disabled={!selectedElement}>
-        Delete Selected Node
+        Delete Selected Node 
       </button>
       {selectedElement && (
         <div>

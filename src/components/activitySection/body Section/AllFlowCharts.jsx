@@ -178,7 +178,7 @@ const edges = [
 const AllFlowcharts = () => {
   return (
     <>
-    <div><h1>Click On the MainList Items to See Separately</h1></div>
+    <div><h1>Click on the MainList Items to see in Details</h1></div>
    
    <div style={{ height: '100vh', marginTop: '0px', padding: '0px' }}>
       <ReactFlow

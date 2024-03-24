@@ -1,27 +1,55 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactFlow, { Handle } from 'react-flow-renderer';
 
-const Planning = () => {
-  const CustomNodeComponent = ({ data }) => (
-    <div className="custom-node" style={{
-      background: 'linear-gradient(135deg, #89D4CF, #734AE8)',
-      color: '#FFFFFF',
-      border: '2px solid #5D5D5D',
-      boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
-      borderRadius: '8px',
-      padding: '20px',
-      fontFamily: 'Roboto, sans-serif',
-      fontSize: '14px',
-      textAlign: 'center',
-      cursor: 'pointer',
-      transition: 'transform 0.2s ease-in-out',
-    }}>
+const CustomNodeComponent = ({ data }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const nodeStyle = {
+    background: 'linear-gradient(135deg, #89D4CF, #734AE8)',
+    color: '#FFFFFF',
+    border: '2px solid #5D5D5D',
+    boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
+    borderRadius: '8px',
+    padding: '20px',
+    fontFamily: 'Roboto, sans-serif',
+    fontSize: '14px',
+    textAlign: 'center',
+    cursor: 'pointer',
+    transition: 'transform 0.2s ease-in-out',
+  };
+
+  const hoverCardStyle = {
+    position: 'absolute',
+    top: '100%',
+    left: '50%',
+    transform: 'translate(-50%, 20px)', // Adjusted for visual clarity
+    backgroundColor: '#fff',
+    padding: '10px',
+    borderRadius: '5px',
+    boxShadow: '0px 4px 14px rgba(0,0,0,0.1)',
+    zIndex: 100,
+    width: '200px', // Set a fixed width or make it dynamic based on content
+  };
+
+  return (
+    <div
+      className="custom-node"
+      style={nodeStyle}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <Handle type="target" position="top" style={{ borderRadius: '50%', background: '#555' }} />
       {data.label}
       <Handle type="source" position="bottom" style={{ borderRadius: '50%', background: '#555' }} />
+      {isHovered && <div className="node-hover-card" style={hoverCardStyle}>Details for {data.label}</div>}
     </div>
   );
+};
 
+const nodeTypes = {
+  custom: CustomNodeComponent,
+};
+
+const Planning = () => {
   const nodes = [
     {
       id: 'planning',
@@ -49,15 +77,17 @@ const Planning = () => {
   ];
 
   return (
+    <>
     <ReactFlow
       nodes={nodes}
       edges={edges}
-      nodeTypes={{ custom: CustomNodeComponent }}
+      nodeTypes={nodeTypes}
       fitView
-      style={{ width: '100%', height: '90vh', background: 'rgba(240, 240, 240, 0.95)', borderRadius: '8px', boxShadow: '0px 4px 14px rgba(0,0,0,0.1)' }}
+      style={{ width: '100%', height: '90vh' }}
     >
-      {/* Additional React Flow components like MiniMap, Controls, Background, etc., can go here */}
+      {/* Additional components like MiniMap, Controls, Background can be added here */}
     </ReactFlow>
+    </>
   );
 };
 
